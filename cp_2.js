@@ -17,8 +17,7 @@ const fetchProductsThen = async function(){
         return array;
     })
     .catch((error) =>{
-        console.log("Fetch Error: " + error);
-        return [];
+        handleError(error);
     });
     console.log(productArray);
     //for-of loop to log product names
@@ -32,15 +31,37 @@ const fetchProductsThen = async function(){
 //step 4 function
 async function fetchProductsAsync(){
     try {
-        const productArray = (await fetch(PRODUCTSURL)).json();
+        const productPromise = (await fetch(PRODUCTSURL)).json();
         console.log("Fetch Successful");
+        const productArray = await productPromise;
+        displayProducts(productArray);
     } catch (error) {
         handleError(error);
     }
-    displayProducts(productArray);
 };
 
-//step
+//step 5 function
+function displayProducts(products){
+    //selecting the product-container element of the Document Object Model
+    const proContainer = document.getElementById("product-container");
+    for (let i = 0; i < 5 ; i++){
+        let divCards = [];
+        divCards[i] = document.createElement('div');
+        divCards[i].classList.add('product-card');
+        divCards[i].innerHTML = `
+        <img src="${products[i].fields.image[0].url}" alt="${products[i].fields.name}" class="product-img">
+        <div class="product-info">
+            <h5 class="product-name">${products[i].fields.name}</h5>
+            <p class="product-price">$${products[i].fields.price.toFixed(2)}</p>
+        </div>
+        `;
+        proContainer.appendChild(divCards[i]);
+    }
+}
+//step 6 function
+function handleError(error){
+    console.log(`An error occurred: ${error} \n Please check the URL or your internet connection.`);
+};
 
 //run async functions
 fetchProductsThen();
