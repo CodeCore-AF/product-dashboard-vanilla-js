@@ -2,7 +2,7 @@
 const PRODUCTSURL = "https://www.course-api.com/javascript-store-products";
 
 //step 3 function, Asyncronous function to fetch data from URL JSON.
-async function fetchProductsThen(){
+const fetchProductsThen = async function(){
     //JSON data is an ARRAY, empty array to hold data.
     //fetch using PROMISE data type
     
@@ -30,5 +30,18 @@ async function fetchProductsThen(){
 }
 
 //step 4 function
+async function fetchProductsAsync(){
+    try {
+        const productArray = (await fetch(PRODUCTSURL)).json();
+        console.log("Fetch Successful");
+    } catch (error) {
+        handleError(error);
+    }
+    displayProducts(productArray);
+};
 
+//step
+
+//run async functions
 fetchProductsThen();
+fetchProductsAsync();
