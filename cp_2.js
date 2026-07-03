@@ -63,6 +63,6 @@ function handleError(error){
     console.log(`An error occurred: ${error} \n Please check the URL or your internet connection.`);
 };
 
-//run async functions
+//Step 7 run async functions.
 fetchProductsThen();
 fetchProductsAsync();
